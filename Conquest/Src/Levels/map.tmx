@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="1">
+ <editorsettings>
+  <export target="map.lua" format="lua"/>
+ </editorsettings>
  <tileset firstgid="1" name="Forest" tilewidth="32" tileheight="32" tilecount="323" columns="19">
-  <image source="../../Map/Forest.png" width="639" height="544"/>
+  <image source="../../Assets/Maps/Forest.png" width="639" height="544"/>
  </tileset>
  <tileset firstgid="324" name="Donjon" tilewidth="32" tileheight="32" tilecount="320" columns="16">
-  <image source="../../Map/Donjon.png" width="512" height="640"/>
+  <image source="../../Assets/Maps/Donjon.png" width="512" height="640"/>
  </tileset>
  <layer id="1" name="Sol" width="50" height="50">
   <data encoding="csv">

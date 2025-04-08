@@ -1,18 +1,18 @@
 -- Fichier LUA --
-player = require("player")
-Sounds = require("Sounds")
+player = require("Src/Player")
+sounds = require("Sounds")
+
 -- LIBRARY [ANIM8 = Animation | Sti = TiledMapLoader | HUMP -> [Camera | ? ]] --
 anim8 = require("Libs/anim8")
 sti = require("Libs/sti")
 camera = require("Libs/camera")
-cam = camera(player.x, player.y, 2)
-gameMap = sti("Assets/Maps/Test/map.lua")
+gameMap = sti("Src/Levels/map.lua")
+
 -- Fixe Filtre --
+cam = camera(player.x, player.y, 2)
 love.graphics.setDefaultFilter("nearest", "nearest")
 -- MAIN MENU
 
-local buttons = {}
-local font = nil
 --------------------------------------------------------------
 function love.load()
     -- MAIN MENU -------------------------------------
