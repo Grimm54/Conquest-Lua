@@ -18,4 +18,5 @@ function requireAll()
     sounds = require("Sounds")
     player = require("src/Player")
     gameMap = sti("Src/Levels/map.lua")
+    require("Src/Menu/Resources")
 end

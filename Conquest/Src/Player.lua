@@ -4,6 +4,7 @@ camera = require("Libs/camera")
 ------------------
 -- TABLE PLAYER --
 ------------------
+
 local player = {
     name = "Grimm",
     heal = 100,
@@ -11,24 +12,23 @@ local player = {
     hungry = 500,
     shield = 10,
     speed = 0.2,
-    spriteSheet = love.graphics.newImage("Assets/Players/Players0.png"),
     x = 400,
-    y = 200
-}
+    y = 200,
 
+}
 -----------------
 -- LOAD PLAYER --
 -----------------
 function player:load()
-    cam = camera(self.x, self.y, 2)
+    cam = camera(self.x, self.y, 3)
 
-    self.spriteSheet = love.graphics.newImage("Assets/Players/Players0.png")
-
-    self.grid32 = anim8.newGrid(32, 32, self.spriteSheet:getWidth(), self.spriteSheet:getHeight())
+    self.grid32 = anim8.newGrid(32, 32, sprites.player:getWidth(), sprites.player:getHeight())
 
     self.animations = {}
     self.animations.stop = anim8.newAnimation(self.grid32("1-13", 1), 0.15)
-    self.animations.run = anim8.newAnimation(self.grid32("1-7", 2), 0.1)
+    self.animations.runL = anim8.newAnimation(self.grid32("1-7", 2), 0.1)
+    self.animations.runR = anim8.newAnimation(self.grid32("9-15", 2), 0.1)
+    self.animations.runT = anim8.newAnimation(self.grid32("1-8", 12), 0.1)
     self.animations.jump = anim8.newAnimation(self.grid32("2-6", 6), 0.1)
     self.animations.spell = anim8.newAnimation(self.grid32("1-6", 11), 0.1)
     self.animations.roulade = anim8.newAnimation(self.grid32("2-5", 13), 0.1)
@@ -36,8 +36,6 @@ function player:load()
     self.animations.freeze = anim8.newAnimation(self.grid32("2-2", 15), 0.1)
 
     self.anim = self.animations.run
-
-    cam = camera(self.x, self.y, 2)
 end
 
 -------------------
@@ -51,7 +49,7 @@ end
 -- DRAW PLAYER --
 -----------------
 function player:draw()
-    self.anim:draw(self.spriteSheet, self.x, self.y, nil, 1.5, nil, 10, 10)
+    self.anim:draw(sprites.player, self.x, self.y, nil, 1.5, nil, 10, 10)
 end
 
 --------------------------
@@ -61,61 +59,70 @@ end
 ------------------------------------
 -- DEPLACEMENT PLAYER + ANIMATION --
 ------------------------------------
+function player:getX(X)
+    X = self.x
+end
+function player:setY(Y)
+    Y = self.y
+end
+function player:getPosition()
+    return {x = self.x, y = self.y}
+end
+
 function player:move(dt)
     local isMoving = false
+    local K = love.keyboard
 
-    if love.keyboard.isDown("d") then
-        player.x = player.x + player.speed
-        player.anim = player.animations.run
-        isMoving = true
-    end
-
-    if love.keyboard.isDown("q") then
+    if K.isDown("q") then
         self.x = self.x - self.speed
-        self.anim = self.animations.run
+        self.anim = self.animations.runR
+        isMoving = true
+    end
+    if K.isDown("d") then
+        self.x = self.x + self.speed
+        self.anim = self.animations.runL
         isMoving = true
     end
 
-    if love.keyboard.isDown("s") then
-        self.y = self.y + self.speed
-        self.anim = self.animations.run
-        isMoving = true
-    end
-
-    if love.keyboard.isDown("z") then
+    if K.isDown("z") then
         self.y = self.y - self.speed
-        self.anim = self.animations.run
+        self.anim = self.animations.runT
         isMoving = true
     end
 
-    if love.keyboard.isDown("space") then
+    if K.isDown("s") then
+        self.y = self.y + self.speed
+        self.anim = self.animations.runR
+        isMoving = true
+    end
+
+    if K.isDown("space") then
         self.anim = self.animations.jump
         isMoving = true
     end
 
-    if love.keyboard.isDown("lshift") then
+    if K.isDown("lshift") then
         self.anim = self.animations.roulade
         isMoving = true
     end
 
-    if love.keyboard.isDown("e") or love.keyboard.isDown("a") then
-        self.anim = self.animations.spell
-        sounds.blip:setVolume(0.1)
-        sounds.blip:play()
-        isMoving = true
+    if isMoving == false then
+        self.anim = self.animations.stop
     end
-    if love.keyboard.isDown(("escape")) then
-        love.event.quit()
+    if K.isDown("q") and K.isDown("d") then
+        self.anim = self.animations.stop
     end
-    -- ZOOM EN COURS
-    if love.keyboard.isDown("c") then
-        love.graphics.print("TEST", self.x, self.y)
+    if K.isDown("z") and K.isDown("s") then
+        self.anim = self.animations.stop
     end
 
-    if isMoving == false then
-        player.anim = player.animations.stop
+    if K.isDown("e") or K.isDown("a") then
+        self.anim = self.animations.spell
+        sounds.environments.blip:setVolume(0.1)
+        sounds.environments.blip:play()
+        isMoving = true
     end
-    player.anim:update(dt)
+    self.anim:update(dt)
 end
 
 return player
