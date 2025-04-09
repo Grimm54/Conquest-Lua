@@ -1,14 +1,15 @@
+---------------------
+-- SETTINGS SCREEN --
+---------------------
+love.window.setFullscreen(true, "desktop")
+love.graphics.setDefaultFilter("nearest", "nearest")
+
 ------------------------
 -- Fichier LUA | LIBS --
 ------------------------
 require("Src/Menu/require")
 requireAll()
 
----------------------
--- SETTINGS SCREEN --
----------------------
-love.window.setFullscreen(true, "desktop")
-love.graphics.setDefaultFilter("nearest", "nearest")
 ---------------
 -- LOVE LOAD --
 ---------------
