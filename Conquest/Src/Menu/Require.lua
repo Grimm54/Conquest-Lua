@@ -1,7 +1,21 @@
+------------------------
+-- Fichier LUA | LIBS --
+------------------------
+
 function requireAll()
-    -- Load assets, resources, data
-
-    require("src/Player")
+    -------------
+    -- LIBRARY --
+    -------------
+    camera = require("Libs/camera")
+    sti = require("Libs/sti")
+    anim8 = require("Libs/anim8")
+    gameMap = sti("Src/Levels/map.lua")
+    -----------------
+    -- FICHIER LUA --
+    -----------------
+    require("Src/Update")
+    anim8 = require("Libs/anim8")
+    sounds = require("Sounds")
+    player = require("src/Player")
+    gameMap = sti("Src/Levels/map.lua")
 end
-
-return requireAll()
