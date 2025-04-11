@@ -86,7 +86,7 @@ function player:move(dt)
 
     if K.isDown("z") then
         self.y = self.y - self.speed
-        self.anim = self.animations.runT
+        self.anim = self.animations.runL
         isMoving = true
     end
 
@@ -109,11 +109,21 @@ function player:move(dt)
     if isMoving == false then
         self.anim = self.animations.stop
     end
+    if K.isDown("z") and K.isDown("s") then
+        self.anim = self.animations.stop
+    end
     if K.isDown("q") and K.isDown("d") then
         self.anim = self.animations.stop
     end
-    if K.isDown("z") and K.isDown("s") then
-        self.anim = self.animations.stop
+    -- UPGRADE 
+    if K.isDown("q") and K.isDown("s") or K.isDown("z") then
+        self.anim = self.animations.runR
+    end
+    if K.isDown("z") and K.isDown("q")then
+        self.anim = self.animations.runR
+    end
+    if K.isDown("d") and K.isDown("s") or K.isDown("z")then
+        self.anim = self.animations.runL
     end
 
     if K.isDown("e") or K.isDown("a") then
